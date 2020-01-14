@@ -303,7 +303,7 @@ def run_mysql_commands(query):
     conn.close()
 
 
-def get_ora_user_carete_query(database):
+def get_ora_user_create_query(database):
     query = "CREATE USER {0} IDENTIFIED BY {1};".format(
         database, database_config["password"])
     return query
@@ -328,8 +328,7 @@ def execute_oracle_command(query):
 def create_oracle_user(database):
     """This method is able to create the user and grant permission to the created user in oracle
     """
-    user_creating_query = get_ora_user_carete_query(database)
-    logger.info("")
+    user_creating_query = get_ora_user_create_query(database)
     logger.info(execute_oracle_command(user_creating_query))
     permission_granting_query = get_ora_grant_query(database)
     return execute_oracle_command(permission_granting_query)
@@ -781,20 +780,20 @@ def build_snapshot_dist(dist_path):
                      exc_info=True)
 
     # copy the zip file to storage
-    logger.info("Moving the Snapshot built file to :" + PRODUCT_STORAGE_DIR_NAME)
-    storage_dir_path = Path(workspace + "/" + PRODUCT_STORAGE_DIR_NAME)
-    snapshot_target_path = Path(workspace + "/" + product_id + "/" + dist_path)
-    snapshot_zip_abs_path = Path(snapshot_target_path / zip_name)
-
-    if os.path.exists(snapshot_zip_abs_path):
-        if not os.path.exists(storage_dir_path):
-            os.makedirs(storage_dir_path)
-        # Remove the zip file and downloading the distribution from jenkins.
-        os.remove(snapshot_zip_abs_path)
-        get_latest_stable_dist()
-
-    else:
-        print("The file does not exist")
+    # logger.info("Moving the Snapshot built file to :" + PRODUCT_STORAGE_DIR_NAME)
+    # storage_dir_path = Path(workspace + "/" + PRODUCT_STORAGE_DIR_NAME)
+    # snapshot_target_path = Path(workspace + "/" + product_id + "/" + dist_path)
+    # snapshot_zip_abs_path = Path(snapshot_target_path / zip_name)
+    #
+    # if os.path.exists(snapshot_zip_abs_path):
+    #     if not os.path.exists(storage_dir_path):
+    #         os.makedirs(storage_dir_path)
+    #     # Remove the zip file and downloading the distribution from jenkins.
+    #     os.remove(snapshot_zip_abs_path)
+    #     get_latest_stable_dist()
+    #
+    # else:
+    #     print("The file does not exist")
 
 
 def add_distribution_to_m2(storage, m2_path):
